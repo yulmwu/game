@@ -13,8 +13,9 @@ let score = 0,
     gameOver = false,
     cloudSpeed = 5,
     gravityScore = 1,
-    cloudFrequency = 0.01,
-    coinFrequency = 0.005
+    cloudFrequency = 0.04,
+    coinFrequency = 0.007,
+    fall_m = 0
 let messageTimer = 0
 let player_messageTimer = 0
 let player_f_cooltime = 0
@@ -52,10 +53,10 @@ const gameOverImage = new Image()
 gameOverImage.src = './resources/drum.png'
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'a') player.dx = -7
-    else if (e.key === 'd') player.dx = 7
-    else if (e.key === 'q') player.dx = -12
-    else if (e.key === 'e') player.dx = 12
+    if (e.key === 'a') player.dx = -10
+    else if (e.key === 'd') player.dx = 10
+    else if (e.key === 'q') player.dx = -15
+    else if (e.key === 'e') player.dx = 15
     else if (e.key === 'f') {
         if (!player.is_player_saying && player_f_cooltime == 0) {
             if (score >= 30) {
@@ -81,7 +82,7 @@ function displayMessage(text, t = 180) {
     messageTimer = t
 }
 
-function playerDisplayMessage(text, t = 180) {
+function playerDisplayMessage(text, t = 420) {
     player.msg = text
     player_messageTimer = t
 }
@@ -131,7 +132,7 @@ function createCloud() {
 function createCoin() {
     const x = Math.random() * (canvas.width - 50)
     const y = canvas.height + Math.random() * 100
-    coins.push({ x, y, width: 40, height: 40 })
+    coins.push({ x, y, width: 60, height: 60 })
 }
 
 function collisionDetection(player, object) {
@@ -211,11 +212,9 @@ function gameLoop() {
 
             if (score <= 50 && score % 10 === 0) {
                 displayMessage('중력의 양이 증가합니다!')
-                gravityScore *= 1.5
-                gravity.innerText = `중력: x${gravityScore}`
+                gravityScore *= 1.3
                 if (score == 50) {
                     displayMessage('중력의 양이 최대치에 도달했습니다!!')
-                    gravity.innerText = `중력: x${gravityScore} (MAX)`
                 }
             }
         }
@@ -235,7 +234,7 @@ function gameLoop() {
         if (player_f_cooltime === 0) {
             fcooltime.innerText = `F 쿨타임: 사용 가능`
         } else {
-            fcooltime.innerText = `F 쿨타임: ${Math.round(player_f_cooltime / 60)}s`
+            fcooltime.innerText = `F 쿨타임: ${(player_f_cooltime / 60).toFixed(1)}s`
         }
     }
 
@@ -246,6 +245,9 @@ function gameLoop() {
             player.msg = ['', '']
         }
     }
+
+    fall_m += gravityScore
+    gravity.innerText = `떨어진 높이: ${fall_m.toFixed(1)}m, 중력: x${gravityScore.toFixed(1)}`
 
     requestAnimationFrame(gameLoop)
 }
