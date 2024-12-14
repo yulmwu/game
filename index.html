@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>하늘에서 떨어지는 게임</title>
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+                font-family: Arial, sans-serif;
+                background-color: #87ceeb;
+            }
+            canvas {
+                display: block;
+            }
+            #scoreBoard {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                color: #fff;
+                font-size: 20px;
+                z-index: 10;
+            }
+            #gravity {
+                position: absolute;
+                left: 10px;
+                top: 40px;
+                color: #fff;
+                font-size: 20px;
+                z-index: 10;
+            }
+
+            #fcooltime {
+                position: absolute;
+                left: 10px;
+                top: 70px;
+                color: #fff;
+                font-size: 20px;
+                z-index: 10;
+            }
+
+            #message {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #fff;
+                font-size: 20px;
+                text-align: center;
+                z-index: 10;
+            }
+
+            #startScreen {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                font-size: 30px;
+                z-index: 20;
+            }
+            #startScreen button {
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 20px;
+                cursor: pointer;
+            }
+            #startScreen p {
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="scoreBoard">Social Credit (점수): 0</div>
+        <div id="gravity">중력: x1</div>
+        <div id="fcooltime">F 쿨타임: 30점 이상 시 사용 가능</div>
+        <div id="message"></div>
+        <div id="startScreen">
+            <p>
+                당신은 중국, 북한 이중 국적의 북한 공작원입니다. 당신의 목표는 남한의 국가원수의 목을 따는 것 입니다. 당신은 낙하산을 챙겨 수송기를
+                타고 서울이 진입했습니다.
+            </p>
+            <p>당신은 뛰어내렸고, 중력에 의해 당신이 낙하합니다. 구름을 피하세요. 다양한 아이템을 통하여 멋진 경험을 쌓아보세요.</p>
+            <p>Social Credit 150점을 넘기면 목표 지점인 대통령실에 남침할 수 있습니다.</p>
+            <p>게임 플레이 방법을 읽어주세요. 본 게임에 등장하는 모든 인물은 가상/허구의 인물이며, 모두 생성형 AI를 이용한 이미지입니다.</p>
+            <button onclick="startGame()">게임 시작</button>
+            <button onclick="window.open('./how.html')">플레이 방법</button>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+
+        <script src="./script.js"></script>
+    </body>
+</html>
