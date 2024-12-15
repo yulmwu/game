@@ -11,7 +11,8 @@ const startScreen = document.getElementById('startScreen');
 
 const cloudFrequency = 0.04,
     coinFrequency = 0.007,
-    seojinFrequency = 0.002
+    seojinFrequency = 0.002,
+    yeejunFrequency = 0.002
 
 let score = 0,
     scoreMax = false,
@@ -28,10 +29,14 @@ const player = new Player();
 let clouds = [];
 let coins = [];
 let seojins = [];
+let yeejuns = [];
 let winds = [];
 
 const gameOverImage = new Image();
 gameOverImage.src = './resources/drum.png';
+
+const nisImage = new Image();
+nisImage.src = './resources/nis.webp';
 
 const player_messages = [
     ['你在说什么？你上次说中华人民共和国应该解散了', '무슨 소리야? 너가 저번에 중화인민공화국이 해체되어야 한다고 말했잖아'],
@@ -74,17 +79,24 @@ const gameLoop = () => {
         ctx.drawImage(gameOverImage, canvas.width / 2 - 150, canvas.height / 2 - 100, 300, 200);
         ctx.font = '50px Arial';
         ctx.fillStyle = 'white';
-        ctx.fillText('Gay Over 😭', canvas.width / 2 - 130, canvas.height / 2 + 120);
+
+        const msg = 'Gay Over 😭'
+        ctx.fillText(msg, canvas.width / 2 - ctx.measureText(msg).width / 2, canvas.height / 2 + 120);
 
         return;
     }
 
     if (player.y > canvas.height + 50) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(gameOverImage, canvas.width / 2 - 150, canvas.height / 2 - 100, 300, 200);
-        ctx.font = '50px Arial';
+        ctx.drawImage(nisImage, canvas.width / 2 - 350, canvas.height / 2 - 166 - 50, 700, 332);
+        ctx.font = '25px Arial';
         ctx.fillStyle = 'white';
-        ctx.fillText('성공 😭', canvas.width / 2 - 130, canvas.height / 2 + 120);
+
+        const msg = '어이쿠, 경로를 잘못잡아 국정원에 떨어졌네요~'
+        ctx.fillText(msg, canvas.width / 2 - ctx.measureText(msg).width / 2, canvas.height / 2 + 150);
+
+        const msg2 = '조사를 받던 중 고문으로 인해 사망했습니다.'
+        ctx.fillText(msg2, canvas.width / 2 - ctx.measureText(msg2).width / 2, canvas.height / 2 + 190);
 
         return;
     }
@@ -106,10 +118,16 @@ const gameLoop = () => {
     if (Math.random() < cloudFrequency + _score_max * 0.0004) clouds.push(new Cloud())
     if (Math.random() < coinFrequency + _score_max * 0.0002) coins.push(new Coin())
     if (Math.random() < seojinFrequency + _score_max * 0.00002) seojins.push(new Seojin())
+    if (Math.random() < yeejunFrequency + _score_max * 0.00003) {
+        if (yeejuns.length <= 2) {
+            yeejuns.push(new Yeejun())
+        }
+    }
 
     handleClouds()
     handleCoins()
     handleSeojins()
+    handleYeejuns()
 
     if (score <= 50 && score % 5 === 0) cloudSpeed += 0.00025
 
@@ -138,7 +156,7 @@ const gameLoop = () => {
     fall_m += gravityScore * stopSpeed
     gravity.innerText = `떨어진 높이: ${fall_m.toFixed(1)}m, 중력: x${gravityScore.toFixed(1)}`
 
-    if (score > 200) {
+    if (score > 10) {
         stopSpeed = 0
         winds = []
     }
