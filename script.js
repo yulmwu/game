@@ -14,8 +14,9 @@ const cloudFrequency = 0.04,
     seojinFrequency = 0.002
 
 let score = 0,
+    scoreMax = false,
     gameOver = false,
-    cloudSpeed = 5,
+    cloudSpeed = 7,
     gravityScore = 1,
     fall_m = 0;
 let messageTimer = 0;
@@ -176,78 +177,75 @@ const player_messages = [
     ['我爱北京天安门', '나는 베이징 천안문을 사랑해'],
 ];
 
-function displayMessage(text, t = 180) {
+const displayMessage = (text, t = 180) => {
     messageBox.innerText = text
     messageTimer = t
 }
 
-function handleClouds() {
-    clouds.forEach((cloud, index) => {
-        cloud.update();
-        cloud.draw();
-        cloud.rectangles.forEach((rect) => {
-            const rectX = cloud.x + rect.offsetX;
-            const rectY = cloud.y + rect.offsetY;
-            if (collisionDetection(player, { x: rectX, y: rectY, width: rect.width, height: rect.height })) {
-                gameOver = true;
-            }
-        });
-        if (cloud.y < -50) clouds.splice(index, 1);
-    });
+const scoreIncrement = (inc) => {
+    score += inc;
+    scoreBoard.innerText = `Social Credit (점수): ${score}`;
+
+    if (score <= 50 && score % 5 === 0) {
+        displayMessage('중력의 양이 증가합니다!')
+        gravityScore *= 1.2
+    }
+
+    if (score > 50 && !scoreMax) {
+        scoreMax = true
+        displayMessage('중력의 양이 최대치에 도달했습니다!!')
+    }
 }
 
-function handleCoins() {
-    coins.forEach((coin, index) => {
-        coin.update();
-        coin.draw();
-        if (collisionDetection(player, coin)) {
-            score += 5;
-            scoreBoard.innerText = `Social Credit (점수): ${score}`;
-            coins.splice(index, 1);
-
-            if (score <= 50 && score % 10 === 0) {
-                displayMessage('중력의 양이 증가합니다!')
-                gravityScore *= 1.3
-                if (score == 50) {
-                    displayMessage('중력의 양이 최대치에 도달했습니다!!')
-                }
-            }
+const handleClouds = () => clouds.forEach((cloud, index) => {
+    cloud.update();
+    cloud.draw();
+    cloud.rectangles.forEach((rect) => {
+        const rectX = cloud.x + rect.offsetX;
+        const rectY = cloud.y + rect.offsetY;
+        if (collisionDetection(player, { x: rectX, y: rectY, width: rect.width, height: rect.height })) {
+            gameOver = true;
         }
-        if (coin.y < -50) coins.splice(index, 1);
     });
-}
+    if (cloud.y < -50) clouds.splice(index, 1);
+});
 
-function handleSeojins() {
-    seojins.forEach((seojin, index) => {
-        seojin.update();
-        seojin.draw();
+const handleCoins = () => coins.forEach((coin, index) => {
+    coin.update();
+    coin.draw();
+    if (collisionDetection(player, coin)) {
+        scoreIncrement(5)
+        coins.splice(index, 1);
+    }
+    if (coin.y < -50) coins.splice(index, 1);
+});
 
-        if (collisionDetection(player, seojin)) {
-            seojins.splice(index, 1);
-        }
-        if (seojin.y < -50) seojins.splice(index, 1);
-    });
-}
+const handleSeojins = () => seojins.forEach((seojin, index) => {
+    seojin.update();
+    seojin.draw();
 
-function handleWinds() {
-    winds.forEach((wind, index) => {
-        wind.update()
-        wind.draw()
+    if (collisionDetection(player, seojin)) {
+        scoreIncrement(10)
+        seojins.splice(index, 1);
+    }
+    if (seojin.y < -50) seojins.splice(index, 1);
+});
 
-        if (wind.y < -50) winds.splice(index, 1)
-    })
-}
+const handleWinds = () => winds.forEach((wind, index) => {
+    wind.update()
+    wind.draw()
 
-function collisionDetection(player, object) {
-    return (
-        player.x < object.x + object.width &&
-        player.x + player.width > object.x &&
-        player.y < object.y + object.height &&
-        player.y + player.height > object.y
-    );
-}
+    if (wind.y < -50) winds.splice(index, 1)
+})
 
-function gameLoop() {
+const collisionDetection = (player, object) => (
+    player.x < object.x + object.width &&
+    player.x + player.width > object.x &&
+    player.y < object.y + object.height &&
+    player.y + player.height > object.y
+);
+
+const gameLoop = () => {
     // if (gameOver) {
     //     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //     ctx.drawImage(gameOverImage, canvas.width / 2 - 150, canvas.height / 2 - 100, 300, 200);
@@ -268,15 +266,17 @@ function gameLoop() {
 
     handleWinds()
 
-    if (Math.random() < cloudFrequency + score * 0.0005) clouds.push(new Cloud())
-    if (Math.random() < coinFrequency + score * 0.0002) coins.push(new Coin())
-    if (Math.random() < seojinFrequency + score * 0.00002) seojins.push(new Seojin())
+    const _score_max = score <= 150 ? score : 150
+
+    if (Math.random() < cloudFrequency + _score_max * 0.0004) clouds.push(new Cloud())
+    if (Math.random() < coinFrequency + _score_max * 0.0002) coins.push(new Coin())
+    if (Math.random() < seojinFrequency + _score_max * 0.00002) seojins.push(new Seojin())
 
     handleClouds()
     handleCoins()
     handleSeojins()
 
-    if (score <= 50 && score % 10 === 0) cloudSpeed += 0.005
+    if (score <= 50 && score % 5 === 0) cloudSpeed += 0.00025
 
     if (messageTimer > 0) {
         messageTimer--
@@ -306,7 +306,7 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-function startGame() {
+const startGame = () => {
     startScreen.style.display = 'none';
     gameLoop();
 }
