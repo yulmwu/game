@@ -18,7 +18,8 @@ let score = 0,
     gameOver = false,
     cloudSpeed = 7,
     gravityScore = 1,
-    fall_m = 0;
+    fall_m = 0,
+    inv = false;
 let messageTimer = 0;
 
 class Player {
@@ -246,14 +247,14 @@ const collisionDetection = (player, object) => (
 );
 
 const gameLoop = () => {
-    // if (gameOver) {
-    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //     ctx.drawImage(gameOverImage, canvas.width / 2 - 150, canvas.height / 2 - 100, 300, 200);
-    //     ctx.font = '50px Arial';
-    //     ctx.fillStyle = 'white';
-    //     ctx.fillText('Gay Over 😭', canvas.width / 2 - 130, canvas.height / 2 + 120);
-    //     return;
-    // }
+    if (gameOver && !inv) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(gameOverImage, canvas.width / 2 - 150, canvas.height / 2 - 100, 300, 200);
+        ctx.font = '50px Arial';
+        ctx.fillStyle = 'white';
+        ctx.fillText('Gay Over 😭', canvas.width / 2 - 130, canvas.height / 2 + 120);
+        return;
+    }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     player.move();
@@ -308,6 +309,12 @@ const gameLoop = () => {
 
 const startGame = () => {
     startScreen.style.display = 'none';
+    gameLoop();
+}
+
+const startInvGame = () => {
+    startScreen.style.display = 'none';
+    inv = true
     gameLoop();
 }
 
