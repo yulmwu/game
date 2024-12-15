@@ -17,6 +17,7 @@ let score = 0,
     scoreMax = false,
     gameOver = false,
     cloudSpeed = 7,
+    stopSpeed = 1,
     gravityScore = 1,
     fall_m = 0,
     inv = false;
@@ -43,8 +44,15 @@ class Player {
 
     move() {
         this.x += this.dx;
-        this.y = this.baseY + Math.sin(this.angle) * this.amplitude;
-        this.angle += 0.05;
+
+        if (stopSpeed == 0) {
+            this.y += cloudSpeed
+            inv = true
+        } else {
+            this.y = this.baseY + Math.sin(this.angle) * this.amplitude;
+            this.angle += 0.05;
+        }
+
         if (this.x < 0) this.x = 0;
         if (this.x + this.width > canvas.width) this.x = canvas.width - this.width;
     }
@@ -85,7 +93,7 @@ class Cloud {
     }
 
     update() {
-        this.y -= cloudSpeed;
+        this.y -= cloudSpeed * stopSpeed;
     }
 
     draw() {
@@ -107,7 +115,7 @@ class Coin {
     }
 
     update() {
-        this.y -= cloudSpeed;
+        this.y -= cloudSpeed * stopSpeed;
     }
 
     draw() {
@@ -126,7 +134,7 @@ class Seojin {
     }
 
     update() {
-        this.y -= cloudSpeed / 2;
+        this.y -= (cloudSpeed / 2) * stopSpeed;
     }
 
     draw() {
@@ -147,11 +155,10 @@ class Wind {
         this.y = canvas.height
         this.width = 1 + Math.random() * 3
         this.height = Math.random() * 30 + 50
-        this.speed = cloudSpeed + Math.random() * 1
     }
 
     update() {
-        this.y -= this.speed
+        this.y -= stopSpeed * (cloudSpeed + Math.random() * 1)
     }
 
     draw() {
@@ -253,10 +260,22 @@ const gameLoop = () => {
         ctx.font = '50px Arial';
         ctx.fillStyle = 'white';
         ctx.fillText('Gay Over 😭', canvas.width / 2 - 130, canvas.height / 2 + 120);
+
+        return;
+    }
+
+    if (player.y > canvas.height + 50) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(gameOverImage, canvas.width / 2 - 150, canvas.height / 2 - 100, 300, 200);
+        ctx.font = '50px Arial';
+        ctx.fillStyle = 'white';
+        ctx.fillText('성공 😭', canvas.width / 2 - 130, canvas.height / 2 + 120);
+
         return;
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     player.move();
     player.draw();
 
@@ -301,8 +320,13 @@ const gameLoop = () => {
         }
     }
 
-    fall_m += gravityScore
+    fall_m += gravityScore * stopSpeed
     gravity.innerText = `떨어진 높이: ${fall_m.toFixed(1)}m, 중력: x${gravityScore.toFixed(1)}`
+
+    if (score > 200) {
+        stopSpeed = 0
+        winds = []
+    }
 
     requestAnimationFrame(gameLoop);
 }
@@ -319,6 +343,8 @@ const startInvGame = () => {
 }
 
 document.addEventListener('keydown', (e) => {
+    if (!stopSpeed) return
+
     switch (e.key) {
         case 'a':
             player.dx = -10;
