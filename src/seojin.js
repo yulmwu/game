@@ -27,6 +27,7 @@ const handleSeojins = () => seojins.forEach((seojin, index) => {
 
     if (collisionDetection(player, seojin)) {
         scoreIncrement(10)
+        particle(seojin.x, seojin.y, ['#000000'])
         seojins.splice(index, 1);
     }
     if (seojin.y < -50) seojins.splice(index, 1);

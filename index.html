@@ -3,13 +3,13 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>하늘에서 떨어지는 게임</title>
+        <title>남침</title>
         <style>
             body {
                 margin: 0;
                 overflow: hidden;
                 font-family: Arial, sans-serif;
-                background-color: #87ceeb;
+                background-color: #151515;
             }
             canvas {
                 display: block;
@@ -42,7 +42,18 @@
 
             #message {
                 position: absolute;
-                top: 50%;
+                top: 60%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #fff;
+                font-size: 20px;
+                text-align: center;
+                z-index: 10;
+            }
+
+            #message2 {
+                position: absolute;
+                top: 65%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 color: #fff;
@@ -57,7 +68,7 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0, 0, 0, 0.8);
+                /* background: rgba(0, 0, 0, 0.8); */
                 color: white;
                 display: flex;
                 flex-direction: column;
@@ -80,8 +91,9 @@
     <body>
         <div id="scoreBoard">Social Credit (점수): 0</div>
         <div id="gravity">중력: x1</div>
-        <div id="fcooltime">F 쿨타임: 30점 이상 시 사용 가능</div>
+        <div id="fcooltime">F 쿨타임: 20점 이상 시 사용 가능</div>
         <div id="message"></div>
+        <div id="message2"></div>
         <div id="startScreen">
             <p>
                 당신은 중국, 북한 이중 국적의 북한 공작원입니다. 당신의 목표는 남한의 국가원수의 목을 따는 것 입니다. 당신은 낙하산을 챙겨 수송기를
@@ -91,8 +103,12 @@
             <p>Social Credit 200점을 넘기면 목표 지점인 대통령실에 남침할 수 있습니다.</p>
             <p>게임 플레이 방법을 읽어주세요. 본 게임에 등장하는 모든 인물은 가상/허구의 인물이며, 모두 생성형 AI를 이용한 이미지입니다.</p>
             <button onclick="startGame()">게임 시작</button>
-            <button onclick="startInvGame()">무적모드 사용 (하남자모드;;;)</button>
+            <button onclick="startFreeGame()">자유 모드 (끝없이 떨어집니다. 높은 점수에 도전해봐요)</button>
             <button onclick="window.open('./how.html')">플레이 방법</button>
+            <div style="padding-top: 10px">
+                <button onclick="toggleHanam()" id="hanam">무적모드 사용 (하남자모드;;;)</button>
+                <button onclick="toggleBackground()" id="backg">배경 사용</button>
+            </div>
         </div>
         <canvas id="gameCanvas"></canvas>
 
@@ -102,6 +118,7 @@
         <script src="./src/coin.js"></script>
         <script src="./src/seojin.js"></script>
         <script src="./src/yeejun.js"></script>
+        <script src="./src/particle.js"></script>
         <script src="./src/script.js"></script>
     </body>
 </html>

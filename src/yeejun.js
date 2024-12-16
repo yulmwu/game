@@ -26,6 +26,7 @@ const handleYeejuns = () => yeejuns.forEach((yeejun, index) => {
 
     if (collisionDetection(player, yeejun)) {
         scoreIncrement(10)
+        particle(yeejun.x, yeejun.y)
         yeejuns.splice(index, 1);
     }
     if (yeejun.y < -50) yeejuns.splice(index, 1);

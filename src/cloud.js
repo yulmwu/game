@@ -1,8 +1,9 @@
 class Cloud {
-    constructor() {
+    constructor(color) {
         this.x = Math.random() * (canvas.width - 150);
         this.y = canvas.height + Math.random() * 100;
         this.rectangles = this.createRectangles();
+        this.color = color;
     }
 
     createRectangles() {
@@ -24,7 +25,7 @@ class Cloud {
     }
 
     draw() {
-        ctx.fillStyle = '#FFF';
+        ctx.fillStyle = this.color
         this.rectangles.forEach((rect) => {
             ctx.fillRect(this.x + rect.offsetX, this.y + rect.offsetY, rect.width, rect.height);
         });

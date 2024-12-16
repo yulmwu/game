@@ -22,6 +22,7 @@ const handleCoins = () => coins.forEach((coin, index) => {
     coin.draw();
     if (collisionDetection(player, coin)) {
         scoreIncrement(5)
+        particle(coin.x, coin.y)
         coins.splice(index, 1);
     }
     if (coin.y < -50) coins.splice(index, 1);

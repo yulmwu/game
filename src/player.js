@@ -15,6 +15,7 @@ class Player {
         this.is_player_saying = false;
         this.player_messageTimer = 0
         this.player_f_cooltime = 0
+        this.fast_down = false
     }
 
     move() {
@@ -33,11 +34,20 @@ class Player {
     }
 
     draw() {
-        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        if (this.fast_down) {
+            ctx.drawImage(this.image, this.x + 25, this.y, this.width / 2, this.height);
+        } else {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        }
         ctx.font = '20px Arial';
         ctx.fillStyle = 'white';
         ctx.fillText(this.msg[0], this.x + this.width / 2 - ctx.measureText(this.msg[0]).width / 2, this.y + this.height + 30);
         ctx.fillText(this.msg[1], this.x + this.width / 2 - ctx.measureText(this.msg[1]).width / 2, this.y + this.height + 60);
+
+        if (is_hanamja) {
+            const msg = "하남자모드 사용중 🥵"
+            ctx.fillText(msg, this.x + this.width / 2 - ctx.measureText(msg).width / 2, this.y + this.height - 30);
+        }
     }
 
     playerDisplayMessage(text, t = 420) {
