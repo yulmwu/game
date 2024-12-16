@@ -13,7 +13,8 @@ const startScreen = document.getElementById('startScreen');
 const cloudFrequency = 0.04,
     coinFrequency = 0.007,
     seojinFrequency = 0.002,
-    yeejunFrequency = 0.002
+    yeejunFrequency = 0.002,
+    leeFrequency = 0.001
 
 let score = 0,
     scoreMax = false,
@@ -31,9 +32,12 @@ let messageTimer, messageTimer2 = 0;
 const player = new Player();
 
 let clouds = [];
+
 let coins = [];
 let seojins = [];
 let yeejuns = [];
+let lees = [];
+
 let winds = [];
 let particles = [];
 
@@ -144,11 +148,15 @@ const gameLoop = () => {
     if (Math.random() < yeejunFrequency + _score_max * 0.00003) {
         if (yeejuns.length <= 2) yeejuns.push(new Yeejun())
     }
+    if (Math.random() < leeFrequency + _score_max * 0.00002) {
+        if (lees.length <= 1) lees.push(new Lee())
+    }
 
     handleClouds()
     handleCoins()
     handleSeojins()
     handleYeejuns()
+    handleLees()
     handleParticles()
 
     if (score <= 50 && score % 5 === 0) cloudSpeed += 0.00025

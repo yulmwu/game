@@ -15,7 +15,7 @@ class Yeejun {
     draw() {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.font = '15px GmarketSansMedium';
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'black';
         ctx.fillText("잼버리 보이스카우트 예준", this.x + this.width / 2 - ctx.measureText("잼버리 보이스카우트 예준").width / 2, this.y + this.height + 30);
     }
 }
