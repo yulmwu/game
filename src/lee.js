@@ -1,3 +1,5 @@
+let lees = [];
+
 class Lee {
     constructor() {
         this.x = Math.random() * (canvas.width - 50);
@@ -29,7 +31,7 @@ const handleLees = () => lees.forEach((lee, index) => {
     if (lee.life && collisionDetection(player, lee)) {
         lee.life = false
         scoreIncrement(-50)
-        particle(lee.x, lee.y, ['#000000'])
+        particle_explode(lee.x, lee.y, ['#000000'])
         lee.image.src = './resources/drumt.png';
     }
     if (lee.y < -100) lees.splice(index, 1);

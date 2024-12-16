@@ -1,3 +1,5 @@
+let winds = [];
+
 class Wind {
     constructor() {
         const xDirection = Math.random() > 0.5 ? 1 : -1

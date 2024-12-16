@@ -1,3 +1,5 @@
+let yeejuns = [];
+
 class Yeejun {
     constructor() {
         this.x = Math.random() * (canvas.width - 50);
@@ -26,7 +28,7 @@ const handleYeejuns = () => yeejuns.forEach((yeejun, index) => {
 
     if (collisionDetection(player, yeejun)) {
         scoreIncrement(10)
-        particle(yeejun.x, yeejun.y)
+        particle_congrats(yeejun.x, yeejun.y)
         yeejuns.splice(index, 1);
     }
     if (yeejun.y < -50) yeejuns.splice(index, 1);

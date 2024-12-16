@@ -1,4 +1,6 @@
-class Particle {
+let congrats = [];
+
+class Congrats {
     constructor(x, y, color) {
         this.x = x;
         this.y = y;
@@ -23,17 +25,17 @@ class Particle {
     }
 }
 
-const particle = (x, y, colors = ["#FF5733", "#FFC300", "#DAF7A6", "#C70039", "#900C3F"]) => {
+const particle_congrats = (x, y, colors = ["#FF5733", "#FFC300", "#DAF7A6", "#C70039", "#900C3F"]) => {
     for (let i = 0; i < 30; i++) {
         const color = colors[Math.floor(Math.random() * colors.length)];
-        particles.push(new Particle(x, y, color));
+        congrats.push(new Congrats(x, y, color));
     }
 }
 
-const handleParticles = () => {
-    particles = particles.filter(particle => particle.life > 0);
-    particles.forEach(particle => {
-        particle.update();
-        particle.draw();
+const handleCongrats = () => {
+    congrats = congrats.filter(particle => particle.life > 0);
+    congrats.forEach(congrats => {
+        congrats.update();
+        congrats.draw();
     });
 }

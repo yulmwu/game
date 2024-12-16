@@ -1,3 +1,5 @@
+let clouds = [];
+
 class Cloud {
     constructor(color) {
         this.x = Math.random() * (canvas.width - 150);

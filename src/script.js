@@ -31,16 +31,6 @@ let messageTimer, messageTimer2 = 0;
 
 const player = new Player();
 
-let clouds = [];
-
-let coins = [];
-let seojins = [];
-let yeejuns = [];
-let lees = [];
-
-let winds = [];
-let particles = [];
-
 const gameOverImage = new Image();
 gameOverImage.src = './resources/drum.png';
 
@@ -157,7 +147,9 @@ const gameLoop = () => {
     handleSeojins()
     handleYeejuns()
     handleLees()
-    handleParticles()
+
+    handleCongrats()
+    handleExplodes()
 
     if (score <= 50 && score % 5 === 0) cloudSpeed += 0.00025
 
@@ -265,11 +257,11 @@ document.addEventListener('keydown', (e) => {
                     player.playerDisplayMessage(player_messages[Math.floor(Math.random() * player_messages.length)], 540)
                     displayMessage('애국심을 포기하고 대한민국에 요청하여 구름을 제거하였읍니다.', 540)
                     clouds.forEach((cloud, _) => {
-                        particle(cloud.x, cloud.y)
+                        particle_congrats(cloud.x, cloud.y)
                     })
                     clouds = []
 
-                    particle(player.x, player.y, ['#ff0000'])
+                    particle_congrats(player.x, player.y, ['#ff0000'])
                 }
             }
             break;

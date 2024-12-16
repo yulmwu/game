@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bomb Explosion Effect</title>
+        <style>
+            body,
+            html {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #000; /* 검은 배경 */
+            }
+            canvas {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="explosionCanvas"></canvas>
+        <script>
+            const canvas = document.getElementById('explosionCanvas')
+            const ctx = canvas.getContext('2d')
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
+
+            class Particle {
+                constructor(x, y, color, isSmoke = false) {
+                    this.x = x
+                    this.y = y
+                    this.radius = Math.random() * 2 + 0.5
+                    this.color = color
+                    this.speedX = (Math.random() - 0.5) * 20
+                    this.speedY = (Math.random() - 0.5) * 20
+                    this.life = 20
+                    this.opacity = 1
+                    this.isSmoke = isSmoke
+                }
+
+                update() {
+                    this.x += this.speedX
+                    this.y += this.speedY
+                    if (this.isSmoke) {
+                        this.opacity -= 0.01
+                        this.radius += 0.2
+                    } else {
+                        this.opacity -= 0.02
+                    }
+                    this.life--
+                }
+
+                draw() {
+                    ctx.save()
+                    ctx.globalAlpha = this.opacity
+                    ctx.beginPath()
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+                    ctx.fillStyle = this.color
+                    ctx.fill()
+                    ctx.restore()
+                }
+            }
+
+            let particles = []
+            let shockwaves = []
+
+            function explode(x, y) {
+                const colors = ['#1E90FF', '#4682B4', '#00BFFF', '#87CEFA']
+                for (let i = 0; i < 100; i++) {
+                    const color = colors[Math.floor(Math.random() * colors.length)]
+                    particles.push(new Particle(x, y, color))
+                }
+
+                for (let i = 0; i < 50; i++) {
+                    particles.push(new Particle(x, y, 'rgba(100, 100, 100, 0.5)', true))
+                }
+            }
+
+            // 애니메이션 루프
+            function animate() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.2)' // 잔상 효과
+                ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+                // 충격파 업데이트 및 그리기
+                shockwaves = shockwaves.filter((sw) => sw.opacity > 0)
+                shockwaves.forEach((shockwave) => {
+                    shockwave.update()
+                    shockwave.draw()
+                })
+
+                // 입자 업데이트 및 그리기
+                particles = particles.filter((particle) => particle.life > 0 && particle.opacity > 0)
+                particles.forEach((particle) => {
+                    particle.update()
+                    particle.draw()
+                })
+
+                requestAnimationFrame(animate)
+            }
+
+            // 클릭 이벤트: 폭발 생성
+            canvas.addEventListener('click', (e) => {
+                const rect = canvas.getBoundingClientRect()
+                const x = e.clientX - rect.left
+                const y = e.clientY - rect.top
+                explode(x, y)
+            })
+
+            animate()
+        </script>
+    </body>
+</html>

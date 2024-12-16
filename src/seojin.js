@@ -1,3 +1,5 @@
+let seojins = [];
+
 class Seojin {
     constructor() {
         this.x = Math.random() * (canvas.width - 50);
@@ -27,7 +29,7 @@ const handleSeojins = () => seojins.forEach((seojin, index) => {
 
     if (collisionDetection(player, seojin)) {
         scoreIncrement(10)
-        particle(seojin.x, seojin.y, ['#000000'])
+        particle_congrats(seojin.x, seojin.y, ['#000000'])
         seojins.splice(index, 1);
     }
     if (seojin.y < -50) seojins.splice(index, 1);

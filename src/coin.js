@@ -1,3 +1,5 @@
+let coins = [];
+
 class Coin {
     constructor() {
         this.x = Math.random() * (canvas.width - 50);
@@ -22,7 +24,7 @@ const handleCoins = () => coins.forEach((coin, index) => {
     coin.draw();
     if (collisionDetection(player, coin)) {
         scoreIncrement(5)
-        particle(coin.x, coin.y)
+        particle_congrats(coin.x, coin.y)
         coins.splice(index, 1);
     }
     if (coin.y < -50) coins.splice(index, 1);
