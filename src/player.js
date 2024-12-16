@@ -39,7 +39,7 @@ class Player {
         } else {
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
-        ctx.font = '20px Arial';
+        ctx.font = '20px GmarketSansMedium';
         ctx.fillStyle = 'white';
         ctx.fillText(this.msg[0], this.x + this.width / 2 - ctx.measureText(this.msg[0]).width / 2, this.y + this.height + 30);
         ctx.fillText(this.msg[1], this.x + this.width / 2 - ctx.measureText(this.msg[1]).width / 2, this.y + this.height + 60);

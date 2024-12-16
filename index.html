@@ -5,10 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>남침</title>
         <style>
+            @font-face {
+                font-family: 'GmarketSansMedium';
+                src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+
             body {
                 margin: 0;
                 overflow: hidden;
-                font-family: Arial, sans-serif;
+                font-family: GmarketSansMedium;
                 background-color: #151515;
             }
             canvas {
@@ -102,9 +109,11 @@
             <p>당신은 뛰어내렸고, 중력에 의해 당신이 낙하합니다. 구름을 피하세요. 다양한 아이템을 통하여 멋진 경험을 쌓아보세요.</p>
             <p>Social Credit 200점을 넘기면 목표 지점인 대통령실에 남침할 수 있습니다.</p>
             <p>게임 플레이 방법을 읽어주세요. 본 게임에 등장하는 모든 인물은 가상/허구의 인물이며, 모두 생성형 AI를 이용한 이미지입니다.</p>
-            <button onclick="startGame()">게임 시작</button>
-            <button onclick="startFreeGame()">자유 모드 (끝없이 떨어집니다. 높은 점수에 도전해봐요)</button>
-            <button onclick="window.open('./how.html')">플레이 방법</button>
+            <div style="padding-top: 10px">
+                <button onclick="startGame()">게임 시작</button>
+                <button onclick="startFreeGame()">자유 모드</button>
+            </div>
+            <button onclick="window.open('./how.html')">플레이 방법 (필독)</button>
             <div style="padding-top: 10px">
                 <button onclick="toggleHanam()" id="hanam">무적모드 사용 (하남자모드;;;)</button>
                 <button onclick="toggleBackground()" id="backg">배경 사용</button>

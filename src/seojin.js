@@ -14,7 +14,7 @@ class Seojin {
 
     draw() {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-        ctx.font = '15px Arial';
+        ctx.font = '15px GmarketSansMedium';
         ctx.fillStyle = 'white';
         ctx.fillText("무함마드 바크 알 서진", this.x + this.width / 2 - ctx.measureText("무함마드 바크 알 서진").width / 2, this.y + this.height + 30);
         ctx.fillText(" محمد بكر السرزين", this.x + this.width / 2 - ctx.measureText(" محمد بكر السرزين").width / 2, this.y + this.height + 60);

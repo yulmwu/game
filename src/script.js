@@ -90,7 +90,7 @@ const gameLoop = () => {
         messageBox2.innerText = ''
 
         ctx.drawImage(gameOverImage, canvas.width / 2 - 150, canvas.height / 2 - 100, 300, 200);
-        ctx.font = '50px Arial';
+        ctx.font = '50px GmarketSansMedium';
         ctx.fillStyle = 'white';
 
         const msg = 'Gay Over 😭'
@@ -105,7 +105,7 @@ const gameLoop = () => {
         messageBox2.innerText = ''
 
         ctx.drawImage(nisImage, canvas.width / 2 - 350, canvas.height / 2 - 166 - 50, 700, 332);
-        ctx.font = '25px Arial';
+        ctx.font = '25px GmarketSansMedium';
         ctx.fillStyle = 'white';
 
         const msg = '어이쿠, 경로를 잘못잡아 국정원에 떨어졌네요~'
