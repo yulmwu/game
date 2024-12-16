@@ -260,6 +260,8 @@ document.addEventListener('keydown', (e) => {
                         particle(cloud.x, cloud.y)
                     })
                     clouds = []
+
+                    particle(player.x, player.y, ['#ff0000'])
                 }
             }
             break;
